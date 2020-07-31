@@ -1,0 +1,83 @@
+{
+	"questions": [
+		{
+			"text": "Who are you?",
+			"prop": "personnelType",
+			"options": [
+				{
+					"value": "anesthesiaProvider",
+					"text": "Anesthesia provider"
+				},
+				{
+					"value": "rn",
+					"text": "RN"
+				}
+			]
+		},
+		{
+			"text": "Which facility are you located at?",
+			"prop": "facility",
+			"options": [
+				{
+					"value": "asc",
+					"text": "Ambulatory Surgery Center (ASC)"
+				},
+				{
+					"value": "fmlh",
+					"text": "Froedtert Hospital"
+				},
+				{
+					"value": "wbsc",
+					"text": "West Bend Surgery Center"
+				}
+			]
+		},
+		{
+			"text": "Where is the case taking place?",
+			"prop": "location",
+			"options": [
+				{
+					"value": "or",
+					"text": "Operating Room (OR)"
+				},
+				{
+					"value": "procedureLab",
+					"text": "Procedure Lab"
+				},
+				{
+					"value": "cathLab",
+					"text": "Cath Lab"
+				},
+				{
+					"value": "giLab",
+					"text": "GI Lab"
+				}
+			]
+		},
+		{
+			"text": "Is the patient symptomatic / exhibiting COVID-19 symptoms?",
+			"prop": "symptomatic",
+			"options": [
+				{
+					"value": "yes",
+					"text": "Yes"
+				},
+				{
+					"value": "no",
+					"text": "No"
+				}
+			]
+		}
+	],
+	"results": [
+		{
+			"text": "Please do this",
+			"resources": [
+				{
+					"text": "Source reference document",
+					"href": "https://www.wikipedia.org"
+				}
+			]
+		}
+	]
+}
