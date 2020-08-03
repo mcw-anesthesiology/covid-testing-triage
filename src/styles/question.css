@@ -1,3 +1,27 @@
+@media (min-width: 800px) {
+	main#question {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-start;
+	}
+
+	main#question .breadcrumbs {
+		order: 1;
+		flex-basis: 50%;
+		flex-grow: 0;
+		flex-shrink: 1;
+		max-width: unset;
+		min-width: unset;
+	}
+
+	main#question .question {
+		order: 2;
+		flex-grow: 0;
+		flex-shrink: 1;
+	}
+}
+
 .question {
 	position: relative;
 	font-size: 1.25em;
@@ -24,36 +48,7 @@
 
 .question > p {
 	font-size: 1.25em;
-}
-
-.breadcrumbs {
-	padding-left: 1em;
-}
-
-.breadcrumbs .breadcrumb a {
-	color: #555;
-	text-decoration: none;
-	display: flex;
-	border-radius: 3px;
-	padding: 0.5em;
-}
-
-.breadcrumbs .breadcrumb a:hover,
-.breadcrumbs .breadcrumb a:focus {
-	background: rgba(0, 0, 0, 0.05);
-}
-
-.breadcrumbs .breadcrumb-question {
-	display: inline-block;
-	color: #888;
-	text-decoration: inherit;
-	flex-basis: 60%;
-}
-
-.breadcrumbs .breadcrumb-answer {
-	display: inline-block;
-	margin-left: 0.5em;
-	flex-basis: 40%;
+	margin-top: 0;
 }
 
 .options {
@@ -61,6 +56,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	min-width: 80%;
 }
 
 .options .option {

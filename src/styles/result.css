@@ -3,3 +3,11 @@ main#result {
 	flex-direction: column;
 	justify-content: space-around;
 }
+
+main#result > p {
+	font-size: 1.25em;
+}
+
+main#result .resources {
+	padding-left: 0;
+}

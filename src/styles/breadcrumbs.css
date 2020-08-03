@@ -1,0 +1,83 @@
+.breadcrumbs {
+	--background-color: #f3f3f3;
+	--border-color: #ddd;
+	--breadcrumb-text-color: #333;
+	--breadcrumb-question-color: #666;
+	--help-text-color: #222;
+	--hover-background-color: rgba(0, 0, 0, 0.05);
+
+	position: relative;
+	display: block;
+	margin: 1em;
+	padding: 2em 3em;
+	max-width: 80%;
+	min-width: 50%;
+	background: var(--background-color);
+	border-radius: 2px;
+	border: 1px solid var(--border-color);
+}
+
+.breadcrumbs:empty {
+	background: none;
+	border: none;
+}
+
+.breadcrumbs .info-button {
+	position: absolute;
+	display: inline-block;
+	opacity: 0.75;
+	padding: 0;
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+	bottom: 1em;
+	right: 1em;
+	cursor: help;
+	background: white;
+}
+
+.breadcrumbs .info-button:hover,
+.breadcrumbs .info-button:active {
+	background: #ddd;
+}
+
+.breadcrumbs > p {
+	font-size: 0.9em;
+	color: var(--help-text-color);
+	margin: 2em 1em 1em;
+	font-weight: 300;
+	text-align: center;
+}
+
+.breadcrumbs ol {
+	padding: 0 1em;
+	margin: 0;
+}
+
+.breadcrumbs .breadcrumb a {
+	color: var(--breadcrumb-text-color);
+	text-decoration: none;
+	display: flex;
+	border-radius: 3px;
+	padding: 0.5em;
+}
+
+.breadcrumbs .breadcrumb a:hover,
+.breadcrumbs .breadcrumb a:focus {
+	background: var(--hover-background-color);
+}
+
+.breadcrumbs .breadcrumb-question {
+	display: inline-block;
+	color: var(--breadcrumb-question-color);
+	text-decoration: inherit;
+	width: 50%;
+	flex-shrink: 0;
+	flex-grow: 0;
+}
+
+.breadcrumbs .breadcrumb-answer {
+	display: inline-block;
+	margin-left: 2em;
+	flex-basis: 40%;
+}

@@ -1,4 +1,8 @@
+import 'typeface-ubuntu';
+import 'typeface-cantarell';
+
 import 'styles/global.css';
+import 'styles/breadcrumbs.css';
 import 'styles/index.css';
 import 'styles/question.css';
 import 'styles/result.css';

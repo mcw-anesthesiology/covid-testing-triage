@@ -1,4 +1,6 @@
 {
+	"title": "COVID Test Triage Tool",
+	"intro": "Some descriptive text about this app",
 	"questions": [
 		{
 			"text": "Who are you?",

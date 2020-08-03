@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import { title } from '@/config.json';
+
 export default function Layout({ id, children }) {
 	const router = useRouter();
 
@@ -21,7 +23,7 @@ export default function Layout({ id, children }) {
 					</a>
 				)}
 				<Link href="/">
-					<a className="site-title">COVID Test Triage Tool</a>
+					<a className="site-title">{title}</a>
 				</Link>
 			</header>
 			<main id={id}>{children}</main>

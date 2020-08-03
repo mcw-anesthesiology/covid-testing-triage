@@ -6,7 +6,7 @@ import Question from 'components/Question.js';
 
 import { matchesConditions } from 'utils.js';
 
-import config from '@/config.json';
+import { questions } from '@/config.json';
 
 export default function QuestionPage() {
 	const router = useRouter();
@@ -21,17 +21,17 @@ export default function QuestionPage() {
 	}
 
 	return (
-		<Layout>
+		<Layout id="question">
 			<>
-				<Breadcrumbs />
 				<Question {...question} />
+				<Breadcrumbs />
 			</>
 		</Layout>
 	);
 }
 
 function getQuestion(router) {
-	return config.questions.find(
+	return questions.find(
 		question =>
 			!(question.prop in router.query) &&
 			matchesConditions(question.conditions, router.query)

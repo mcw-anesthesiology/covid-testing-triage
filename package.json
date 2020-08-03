@@ -10,11 +10,15 @@
 	"dependencies": {
 		"next": "9.5.1",
 		"react": "16.13.1",
-		"react-dom": "16.13.1"
+		"react-dom": "16.13.1",
+		"typeface-cantarell": "^0.0.72",
+		"typeface-ubuntu": "^0.0.65"
 	},
 	"devDependencies": {
 		"babel-eslint": "^10.1.0",
 		"eslint": "^7.5.0",
-		"eslint-plugin-react": "^7.20.5"
+		"eslint-plugin-react": "^7.20.5",
+		"postcss-flexbugs-fixes": "^4.2.1",
+		"postcss-preset-env": "^6.7.0"
 	}
 }

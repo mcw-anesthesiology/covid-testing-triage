@@ -6,7 +6,7 @@ import Breadcrumbs from 'components/Breadcrumbs.js';
 
 import { matchesConditions } from 'utils.js';
 
-import config from '@/config.json';
+import { results } from '@/config.json';
 
 export default function ResultPage() {
 	const router = useRouter();
@@ -15,12 +15,11 @@ export default function ResultPage() {
 	return (
 		<Layout id="result">
 			<>
-				<Breadcrumbs />
 				{result ? (
 					<>
 						<p>{result.text}</p>
 						{result.resources.length > 0 && (
-							<ul>
+							<ul className="resources">
 								{result.resources.map(resource => (
 									<li key={resource.href}>
 										<a href={resource.href}>
@@ -34,6 +33,7 @@ export default function ResultPage() {
 				) : (
 					<p>Sorry, this doesn&apos;t seem to be valid.</p>
 				)}
+				<Breadcrumbs />
 				<Link href="question">
 					<a className="button">Start again</a>
 				</Link>
@@ -43,7 +43,7 @@ export default function ResultPage() {
 }
 
 function getResult(router) {
-	return config.results.find(result =>
+	return results.find(result =>
 		matchesConditions(result.conditions, router.query)
 	);
 }
