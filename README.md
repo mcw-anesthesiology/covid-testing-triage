@@ -20,7 +20,10 @@ Configuration is done via a required `config.json` file in the root directory:
 				},
 				{
 					"value": "value2",
-					"text": "Option 2"
+					"text": "Option 2",
+					"additionalProps": {
+						"someProp": "someVal"
+					}
 				}
 			]
 		}
@@ -37,6 +40,12 @@ Configuration is done via a required `config.json` file in the root directory:
 					"href": "http://www.example.com/document.pdf"
 				}
 			]
+		},
+		{
+			"conditions": {
+				"question1": "value2"
+			},
+			"src": "/path/to/markdown.md"
 		}
 	]
 }
@@ -45,8 +54,13 @@ Configuration is done via a required `config.json` file in the root directory:
 The `conditions` property is optional in both `question` and `result` objects.
 
 Questions are displayed to the user in order such that the first unanswered question with nonexistent or passing `conditions` is displayed next.
+Options can specify an `additionalProps` object, which will set the property and value pairs given in addition to the question's `prop`.
+
 If no questions remain, the first result is displayed using the same formula.
 You'll likely want to specify a fallback condition-less result at the end of the list unless you're certain you've exhausted all possible `prop`: `value` combinations.
+
+Result and questions support markdown in their `text` property.
+Results can alternatively specify their text via a `src` property, which is a local file path relative to the root project directory (where this README is located).
 
 
 What follows is the starting Next.js README.

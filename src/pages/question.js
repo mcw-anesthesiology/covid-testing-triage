@@ -23,7 +23,7 @@ export default function QuestionPage() {
 	return (
 		<Layout id="question">
 			<>
-				<Question {...question} />
+				{question && <Question {...question} />}
 				<Breadcrumbs />
 			</>
 		</Layout>
