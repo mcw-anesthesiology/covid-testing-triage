@@ -15,7 +15,7 @@ export default function Breadcrumbs() {
 		.map(q => ({
 			...q,
 			answerText: q.options.find(o => o.value === router.query[q.prop])
-				?.text
+				?.text,
 		}));
 
 	return (
@@ -23,18 +23,20 @@ export default function Breadcrumbs() {
 			{answeredQuestions.length > 0 && (
 				<>
 					<ol>
-						{answeredQuestions.map(q => {
+						{answeredQuestions.map((q, i) => {
 							const query = {
-								...router.query
+								...router.query,
 							};
-							delete query[q.prop];
+							for (let j = i; j < answeredQuestions.length; j++) {
+								delete query[answeredQuestions[j].prop];
+							}
 
 							return (
 								<li key={q.prop} className="breadcrumb">
 									<Link
 										href={{
 											pathname: 'question',
-											query
+											query,
 										}}
 									>
 										<a>
@@ -54,7 +56,7 @@ export default function Breadcrumbs() {
 						<p>Press an entry above to change your selection</p>
 					)}
 					<button
-						className="button info-button"
+						className="button help-button"
 						title="Toggle help text"
 						onClick={() => {
 							setShowInfo(!showInfo);
@@ -62,6 +64,12 @@ export default function Breadcrumbs() {
 					>
 						?
 					</button>
+
+					<div className="start-again-container">
+						<Link href="question">
+							<a className="button">Start over</a>
+						</Link>
+					</div>
 				</>
 			)}
 		</div>

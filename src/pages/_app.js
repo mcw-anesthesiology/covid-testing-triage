@@ -1,5 +1,6 @@
 import 'typeface-ubuntu';
 import 'typeface-cantarell';
+import '@reach/dialog/styles.css';
 
 import 'styles/global.css';
 import 'styles/breadcrumbs.css';

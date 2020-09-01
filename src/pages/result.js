@@ -23,9 +23,6 @@ export default function ResultPage({ results }) {
 			<>
 				<Result result={result} />
 				<Breadcrumbs />
-				<Link href="question">
-					<a className="button">Start again</a>
-				</Link>
 			</>
 		</Layout>
 	);
@@ -45,8 +42,8 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			results
-		}
+			results,
+		},
 	};
 }
 

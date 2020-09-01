@@ -9,8 +9,7 @@
 	position: relative;
 	display: block;
 	margin: 1em;
-	padding: 2em 3em;
-	max-width: 80%;
+	padding: 1em 2em;
 	min-width: 50%;
 	background: var(--background-color);
 	border-radius: 2px;
@@ -22,23 +21,9 @@
 	border: none;
 }
 
-.breadcrumbs .info-button {
+.breadcrumbs .help-button {
 	position: absolute;
 	display: inline-block;
-	opacity: 0.75;
-	padding: 0;
-	width: 2em;
-	height: 2em;
-	border-radius: 50%;
-	bottom: 1em;
-	right: 1em;
-	cursor: help;
-	background: white;
-}
-
-.breadcrumbs .info-button:hover,
-.breadcrumbs .info-button:active {
-	background: #ddd;
 }
 
 .breadcrumbs > p {
@@ -80,4 +65,15 @@
 	display: inline-block;
 	margin-left: 2em;
 	flex-basis: 40%;
+}
+
+.breadcrumbs .breadcrumb-question,
+.breadcrumbs .breadcrumb-answer {
+	hyphens: auto;
+}
+
+.breadcrumbs .start-again-container {
+	margin: 2em 0 0;
+	text-align: center;
+	font-size: 0.9em;
 }

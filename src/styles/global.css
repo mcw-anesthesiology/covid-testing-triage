@@ -20,6 +20,14 @@ body {
 	box-sizing: border-box;
 }
 
+h1, h2, h3 {
+	margin: 2em 0 1em;
+}
+
+h1:first-child, h2:first-child, h3:first-child {
+	margin-top: 1em;
+}
+
 #__next {
 	height: 100%;
 }
@@ -105,13 +113,100 @@ a.button {
 	text-decoration: none;
 	color: var(--text-color);
 	cursor: pointer;
+	background-color: transparent;
 }
 
-.button:hover {
+.button:hover,
+.button:active,
+.button:focus {
 	background-color: var(--background-color);
 }
 
 .button,
 a.button:visited {
 	color: var(--text-color);
+}
+
+button.help-button,
+a.help-button {
+	opacity: 0.75;
+	padding: 0;
+	width: 2em;
+	height: 2em;
+	border-radius: 50%;
+	bottom: 1em;
+	right: 1em;
+	cursor: help;
+	background: white;
+}
+
+.help-button:hover,
+.help-button:active,
+.help-button:focus {
+	background: #ddd;
+}
+
+button.info-button,
+a.info-button {
+	border-radius: 10px;
+	background: #f3f3f3;
+}
+
+.info-button:hover,
+.info-button:active,
+.info-button:focus {
+	background: #fafafa;
+	text-decoration: underline;
+}
+
+ul, ol {
+	padding-left: 1.5em;
+}
+
+li > ul,
+li > ol {
+	padding-left: 1em;
+}
+
+li {
+	margin-top: 0.5em;
+}
+
+[data-reach-dialog-overlay] {
+	z-index: 100;
+}
+
+[data-reach-dialog-content] {
+	position: relative;
+	width: auto;
+	max-width: 80vw;
+	border-radius: 6px;
+}
+
+[data-reach-dialog-content] > :last-child {
+	margin-bottom: 2rem;
+}
+
+
+@media (min-width: 800px) {
+	[data-reach-dialog-content] {
+		padding: 2em 4em;
+	}
+}
+
+.close-button {
+	border: none;
+	background: none;
+	color: #888;
+	position: absolute;
+	top: 0.5em;
+	right: 0.5em;
+	cursor: pointer;
+	padding: 0.25em;
+	font-size: 1.5em;
+}
+
+.close-button:focus,
+.close-button:hover {
+	color: black;
 }

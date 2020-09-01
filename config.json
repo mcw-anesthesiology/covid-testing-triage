@@ -1,6 +1,6 @@
 {
 	"title": "COVID Test Triage Tool",
-	"intro": "Some descriptive text about this app",
+	"intro": "Welcome to the MCW Department of Anesthesiology COVID decision support tool.\n\nPlease press the button below to begin.",
 	"questions": [
 		{
 			"text": "Which phase is it?",
@@ -169,6 +169,59 @@
 					"text": "Negative"
 				}
 			]
+		},
+		{
+			"conditions": {
+				"phase": "post",
+				"personnelType": "surgeonOffice",
+				"testResult": "positive"
+			},
+			"preText": "Follow established guidelines for next steps with decision on surgery and follow established PPE guidelines.",
+			"text": "Is the patient immunocompromised?",
+			"helpText": "## The definition of immunocompromised is as follows:\n\n- AIDS (CD4 below 200, or CD4 percentage below 15%)\n- Congenital (primary) immunodeficiency disorders\n- Generalized malignancy treatment:\n\t- Alkylating agents\n\t- Antimetabolites\n\t- Radiation therapy\n- On large doses of corticosteroids for 14 days or longer:\n\t- 20 mg or more per day of prednisone or equivalent\n\t- 2 mg/kg or more per day of perdnisone or equivalent\n- Solid organ transplant patients\n- Bone marrow transplant patients who are taking certain immunosuppressive drugs\n\t- BMT patients are considered \"immune competent\" 2 years after their treatment if they are **NOT** on steroids, biologics. If they are on steroids, or medications for graft vs host disease, then their risk is increased similar to the solid organ transplant patient\n- Other immunosuppressants / immunomodulators",
+			"prop": "immunocompromised",
+			"options": [
+				{
+					"value": "yes",
+					"text": "Yes"
+				},
+				{
+					"value": "no",
+					"text": "No"
+				}
+			],
+			"resources": [
+				{
+					"text": "Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive Patients",
+					"href": "/IPAC DC Isolation Criteria 8.4.2020 V12.pdf"
+				}
+			]
+		},
+		{
+			"conditions": {
+				"phase": "post",
+				"personnelType": "surgeonOffice",
+				"testResult": "positive",
+				"immunocompromised": "no"
+			},
+			"text": "Was the patient in the ICU for COVID-19 illness?",
+			"prop": "severeDisease",
+			"options": [
+				{
+					"value": "yes",
+					"text": "Yes"
+				},
+				{
+					"value": "no",
+					"text": "No"
+				}
+			],
+			"resources": [
+				{
+					"text": "Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive Patients",
+					"href": "/IPAC DC Isolation Criteria 8.4.2020 V12.pdf"
+				}
+			]
 		}
 	],
 	"results": [
@@ -224,9 +277,42 @@
 			"conditions": {
 				"phase": "post",
 				"personnelType": "surgeonOffice",
-				"testResult": "positive"
+				"testResult": "positive",
+				"immunocompromised": "yes"
 			},
-			"text": "Follow established guidelines for next steps with decision on surgery and follow established PPE guidelines.\n\nProvide guidance to patient about discontinuation of isolation.",
+			"src": "/results/immunocompromised.md",
+			"resources": [
+				{
+					"text": "Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive Patients",
+					"href": "/IPAC DC Isolation Criteria 8.4.2020 V12.pdf"
+				}
+			]
+		},
+		{
+			"conditions": {
+				"phase": "post",
+				"personnelType": "surgeonOffice",
+				"testResult": "positive",
+				"immunocompromised": "no",
+				"severeDisease": "yes"
+			},
+			"src": "/results/severe-disease.md",
+			"resources": [
+				{
+					"text": "Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive Patients",
+					"href": "/IPAC DC Isolation Criteria 8.4.2020 V12.pdf"
+				}
+			]
+		},
+		{
+			"conditions": {
+				"phase": "post",
+				"personnelType": "surgeonOffice",
+				"testResult": "positive",
+				"immunocompromised": "no",
+				"severeDisease": "no"
+			},
+			"src": "/results/other-patients.md",
 			"resources": [
 				{
 					"text": "Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive Patients",

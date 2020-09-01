@@ -7,7 +7,7 @@ export default function Layout({ id, children }) {
 	const router = useRouter();
 
 	return (
-		<div id="layout">
+		<div id="layout" lang="en">
 			<header className="site-header">
 				{Object.keys(router.query).length > 0 && (
 					<a
