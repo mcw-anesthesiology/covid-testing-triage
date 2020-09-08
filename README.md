@@ -3,52 +3,32 @@
 A straightforward question/answer app intended for determining a COVID testing protocol from a predefined flowchart.
 Though can be used for any question-and-answer based flowchart.
 
-Configuration is done via a required `config.json` file in the root directory:
+Configuration is done via a required `config.yaml` file in the root directory:
 
-```json
-{
-	"title": "COVID Test Triage Tool",
-	"intro": "Some descriptive introductory text about this app",
-	"questions": [
-		{
-			"text": "Question text",
-			"prop": "question1",
-			"options": [
-				{
-					"value": "value1",
-					"text": "Option 1"
-				},
-				{
-					"value": "value2",
-					"text": "Option 2",
-					"additionalProps": {
-						"someProp": "someVal"
-					}
-				}
-			]
-		}
-	],
-	"results": [
-		{
-			"conditions": {
-				"question1": "value1"
-			},
-			"text": "You selected Option 1 for Question 1",
-			"resources": [
-				{
-					"text": "Optional reference document",
-					"href": "http://www.example.com/document.pdf"
-				}
-			]
-		},
-		{
-			"conditions": {
-				"question1": "value2"
-			},
-			"src": "/path/to/markdown.md"
-		}
-	]
-}
+```yaml
+title: COVID Test Triage Tool
+intro: Some descriptive introductory text about this app
+questions:
+- text: Question text
+  prop: question1
+  options:
+  - value: value1
+    text: Option 1
+  - value: value2
+    text: Option 2
+    additionalProps:
+      someProp: someVal
+results:
+- conditions:
+    question1: value1
+  text: You selected Option 1 for Question 1
+  resources:
+  - text: Optional reference document
+    href: http://www.example.com/document.pdf
+- conditions:
+    question1: value2
+  text: |
+	# Some markdown
 ```
 
 The `conditions` property is optional in both `question` and `result` objects.
@@ -60,8 +40,6 @@ If no questions remain, the first result is displayed using the same formula.
 You'll likely want to specify a fallback condition-less result at the end of the list unless you're certain you've exhausted all possible `prop`: `value` combinations.
 
 Result and questions support markdown in their `text` property.
-Results can alternatively specify their text via a `src` property, which is a local file path relative to the root project directory (where this README is located).
-
 
 What follows is the starting Next.js README.
 

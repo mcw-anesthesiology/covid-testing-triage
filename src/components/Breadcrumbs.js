@@ -3,9 +3,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import config from '@/config.json';
-
-export default function Breadcrumbs() {
+export default function Breadcrumbs({ config }) {
 	const [showInfo, setShowInfo] = useState(false);
 
 	const router = useRouter();

@@ -1,0 +1,319 @@
+---
+title: COVID Test Triage Tool
+intro: |
+    Welcome to the MCW Department of Anesthesiology COVID decision support tool.
+
+    Please press the button below to begin.
+questions:
+    - text: Which phase is it?
+      prop: phase
+      options:
+          - value: pre
+            text: Clinic & Pre-Testing
+          - value: post
+            text: Testing & Post-Testing
+          - value: discontinutationGuidelines
+            text: Isolation Discontinuation Guidelines
+    - text: Who are you?
+      prop: personnelType
+      options:
+          - value: surgeonOffice
+            text: Surgeon Office (MD / Staff)
+          - conditions:
+                phase: pre
+            value: clinicTeam
+            text: Clinic Team
+          - conditions:
+                phase: post
+            value: testingSiteRN
+            text: Testing site RN
+    - conditions:
+          phase: pre
+          personnelType: surgeonOffice
+      preText:
+          Contact patient for normal pre-op discussion. Inform the patient that they
+          need pre-op COVID testing. Discuss need for patient to have MyChart for results.
+      text: Is the patient able to come to testing site 2-3 days before surgery?
+      prop: patientAbleToTest
+      options:
+          - value: 'yes'
+            text: 'Yes'
+          - value: 'no'
+            text: 'No'
+    - conditions:
+          phase: pre
+          personnelType: surgeonOffice
+          patientAbleToTest: 'no'
+      text: Work with patient on alternate arrangements
+      prop: alternateArrangements
+      options:
+          - value: ok
+            text: Arrangements to test have been made
+    - conditions:
+          phase: pre
+          personnelType: clinicTeam
+      text: When is the test needed?
+      prop: whenNeeded
+      options:
+          - value: today
+            text: Today
+          - value: future
+            text: Future
+    - conditions:
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: future
+      text: Can patient be scheduled while on call?
+      prop: canBeScheduledOnCall
+      options:
+          - value: 'yes'
+            text: 'Yes'
+            additionalProps:
+                whenNeeded: today
+          - value: 'no'
+            text: 'No'
+    - conditions:
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: future
+          canBeScheduledOnCall: 'no'
+      text: Manage patients not yet scheduled to meet testing date per order details
+      prop: managePatients
+      options:
+          - value: ok
+            text: OK
+            additionalProps:
+                whenNeeded: today
+    - conditions:
+          phase: post
+          personnelType: testingSiteRN
+      preText: Confirm patient identity and administer test.
+      text: Is it a weekday?
+      prop: weekday
+      options:
+          - value: weekday
+            text: Weekday
+          - value: weekend
+            text: Weekend
+    - conditions:
+          phase: post
+          personnelType: surgeonOffice
+      text: What is the patient's test result?
+      prop: testResult
+      options:
+          - value: positive
+            text: Positive
+          - value: negative
+            text: Negative
+    - conditions:
+          phase: discontinutationGuidelines
+      text: Is the patient immunocompromised?
+      helpText: |
+          ## The definition of immunocompromised is as follows:
+
+          - AIDS (CD4 below 200, or CD4 percentage below 15%)
+          - Congenital (primary) immunodeficiency disorders
+          - Generalized malignancy treatment:
+            - Alkylating agents
+            - Antimetabolites
+            - Radiation therapy
+          - On large doses of corticosteroids for 14 days or longer:
+            - 20 mg or more per day of prednisone or equivalent
+            - 2 mg/kg or more per day of perdnisone or equivalent
+          - Solid organ transplant patients
+          - Bone marrow transplant patients who are taking certain immunosuppressive drugs
+            - BMT patients are considered \"immune competent\" 2 years after their treatment if they are
+              **NOT** on steroids, biologics. If they are on steroids, or medications for graft
+              vs host disease, then their risk is increased similar to the solid organ transplant
+              patient
+          - Other immunosuppressants / immunomodulators
+      prop: immunocompromised
+      options:
+          - value: 'yes'
+            text: 'Yes'
+          - value: 'no'
+            text: 'No'
+      resources:
+          - text:
+                Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
+                Patients
+            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+    - conditions:
+          phase: discontinutationGuidelines
+          immunocompromised: 'no'
+      text: Was the patient in the ICU for COVID-19 illness?
+      prop: severeDisease
+      options:
+          - value: 'yes'
+            text: 'Yes'
+          - value: 'no'
+            text: 'No'
+      resources:
+          - text:
+                Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
+                Patients
+            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+results:
+    - conditions:
+          phase: pre
+          personnelType: surgeonOffice
+          patientAbleToTest: 'yes'
+      text: |
+          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+
+          Include whether the patient is symtomatic or asymptomatic, as well as the following:
+
+          1. **Priority**: Routine/State
+          2. **Status** = Future
+          3. **Expected Date** = today or future date
+          4. **Time**: enter in comments
+          5. **Location**: Select appropriate site
+          6. **Reason for test**
+          7. Any other pertinent information
+
+          Advise patient to self-quarantine at home after test and call clinic with any concerns.
+    - conditions:
+          phase: pre
+          personnelType: surgeonOffice
+          alternateArrangements: ok
+      text: |
+          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+
+          Include whether the patient is symtomatic or asymptomatic, as well as the following:
+
+          1. **Priority**: Routine/State
+          2. **Status** = Future
+          3. **Expected Date** = today or future date
+          4. **Time**: enter in comments
+          5. **Location**: Select appropriate site
+          6. **Reason for test**
+          7. Any other pertinent information
+
+          Advise patient to self-quarantine at home after test and call clinic with any concerns.
+    - conditions:
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: today
+      text: |
+        ## Schedule patient using
+
+        1. Appropriate lab department
+        2. Appropriate visit type
+        3. Appropriate resource
+        4. Appropriate date and time
+        5. Links lab order to appointment
+
+        ## Complete registration requirements not already completed in MyChart
+
+        **Every patient** needs the following verified:
+
+        1. Name
+        2. Date of birth
+        3. Insurance coverage
+        4. Phone number
+
+        **If patient is not already verified**, then also:
+
+        5. Patient contacts
+        6. Marital status
+        7. Employment information
+
+        ## Review sidebar checklist for any other items the need updating
+
+        -   Obtain virtual verbal consent for documents
+        -   If Accident Related field is not complete, be sure to complete
+        -   If the patient is on Medicare, and MSPQ is not complete, complete MSPQ found in your toolbar
+
+        ## Direct patient
+
+        1. To go to appropriate specimen collection site
+        2. On appropriate date and time
+        3. To call site-specific number upon arrival
+    - conditions:
+          phase: post
+          personnelType: testingSiteRN
+          weekday: weekday
+      text: Instruct patient to wait for results from Clinic Team
+    - conditions:
+          phase: post
+          personnelType: testingSiteRN
+          weekday: weekend
+      text: Follow up with patient on test results
+    - conditions:
+          phase: discontinutationGuidelines
+          immunocompromised: 'yes'
+      text: |
+          ## Patient must meet **ALL** of the following criteria to have isolation precautions discontinued when accessing services at a Froedtert Health facility:
+
+          1. Resolution of fever for 24 hours without use of fever-reducing medications
+          2. Improvement in other symptoms (complete resolution not required)
+          3. Must be 28 days after first positive test
+
+          **If patient remains asymptomatic, do not retest for procedures or hospital admission for 90 days following a positive test.**
+
+          NOTE: Retesting 90 days after a positive test is not recommended because a positive test in an asymptomatic person during the 90 days after illness represents persistent shedding of viral particles.
+          If a recovered person becomes symptomatic during the 90 day window, then retesting may be warranted.
+
+          ---
+
+          ## When can SARS CoV-2 patients return to work or stop isolation at home?
+
+          The patient’s local public health department will assist the patient in determining when they can be released into the community or when they can return to work. Local public health guidelines may differ from home care or healthcare facility guidelines. According to the CDC, patients with mild to moderate COVID-19 illness may stop home isolation and return to work when: resolution of fever for 24 hours without use of fever-reducing medications AND Improvement in symptoms AND at least 10 days have passed since symptoms first appeared. Patients with severe illness (i.e. requiring hospitalization, may require home isolation for up to 20 days. Patients who never develop symptoms, isolation and other precautions can be discontinued 10 days after the date of their first positive test.
+      resources:
+          - text:
+                Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
+                Patients
+            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+    - conditions:
+          phase: discontinutationGuidelines
+          immunocompromised: 'no'
+          severeDisease: 'yes'
+      text: |
+          ## Patient must meet **ALL** of the following criteria to have isolation precautions discontinued when accessing services at a Froedtert Health facility:
+
+          1. Resolution of fever for 24 hours without use of fever-reducing medications
+          2. Improvement in other symptoms (complete resolution not required)
+          3. Must be 20 days after first positive test
+
+          **If patient remains asymptomatic, do not retest for procedures or hospital admission for 90 days following a positive test.**
+
+          NOTE: Retesting 90 days after a positive test is not recommended because a positive test in an asymptomatic person during the 90 days after illness represents persistent shedding of viral particles.
+          If a recovered person becomes symptomatic during the 90 day window, then retesting may be warranted.
+
+          ---
+
+          ## When can SARS CoV-2 patients return to work or stop isolation at home?
+
+          The patient’s local public health department will assist the patient in determining when they can be released into the community or when they can return to work. Local public health guidelines may differ from home care or healthcare facility guidelines. According to the CDC, patients with mild to moderate COVID-19 illness may stop home isolation and return to work when: resolution of fever for 24 hours without use of fever-reducing medications AND Improvement in symptoms AND at least 10 days have passed since symptoms first appeared. Patients with severe illness (i.e. requiring hospitalization, may require home isolation for up to 20 days. Patients who never develop symptoms, isolation and other precautions can be discontinued 10 days after the date of their first positive test.
+      resources:
+          - text:
+                Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
+                Patients
+            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+    - conditions:
+          phase: discontinutationGuidelines
+          immunocompromised: 'no'
+          severeDisease: 'no'
+      text: |
+          ## Patient must meet **ALL** of the following criteria to have isolation precautions discontinued when accessing services at a Froedtert Health facility:
+
+          1. Resolution of fever for 24 hours without use of fever-reducing medications
+          2. Improvement in other symptoms (complete resolution not required)
+          3. Must be 10 days after first positive test
+
+          **If patient remains asymptomatic, do not retest for procedures or hospital admission for 90 days following a positive test.**
+
+          NOTE: Retesting 90 days after a positive test is not recommended because a positive test in an asymptomatic person during the 90 days after illness represents persistent shedding of viral particles.
+          If a recovered person becomes symptomatic during the 90 day window, then retesting may be warranted.
+
+          ---
+
+          ## When can SARS CoV-2 patients return to work or stop isolation at home?
+
+          The patient’s local public health department will assist the patient in determining when they can be released into the community or when they can return to work. Local public health guidelines may differ from home care or healthcare facility guidelines. According to the CDC, patients with mild to moderate COVID-19 illness may stop home isolation and return to work when: resolution of fever for 24 hours without use of fever-reducing medications AND Improvement in symptoms AND at least 10 days have passed since symptoms first appeared. Patients with severe illness (i.e. requiring hospitalization, may require home isolation for up to 20 days. Patients who never develop symptoms, isolation and other precautions can be discontinued 10 days after the date of their first positive test.
+      resources:
+          - text:
+                Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
+                Patients
+            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+    - text: Sorry, this shouldn't have happened.

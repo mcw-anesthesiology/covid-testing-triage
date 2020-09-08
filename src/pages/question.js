@@ -5,35 +5,44 @@ import Breadcrumbs from 'components/Breadcrumbs.js';
 import Question from 'components/Question.js';
 
 import { matchesConditions } from 'utils.js';
+import { getConfig } from 'server-utils.js';
 
-import { questions } from '@/config.json';
-
-export default function QuestionPage() {
+export default function QuestionPage({ config }) {
 	const router = useRouter();
 
-	const question = getQuestion(router);
+	const question = getQuestion(config.questions, router);
 
 	if (!question) {
 		router.replace({
 			pathname: 'result',
-			query: router.query
+			query: router.query,
 		});
 	}
 
 	return (
-		<Layout id="question">
+		<Layout id="question" config={config}>
 			<>
-				{question && <Question {...question} />}
-				<Breadcrumbs />
+				{question && <Question {...question} config={config} />}
+				<Breadcrumbs config={config} />
 			</>
 		</Layout>
 	);
 }
 
-function getQuestion(router) {
+function getQuestion(questions, router) {
 	return questions.find(
 		question =>
 			!(question.prop in router.query) &&
 			matchesConditions(question.conditions, router.query)
 	);
+}
+
+export async function getStaticProps() {
+	const config = await getConfig();
+
+	return {
+		props: {
+			config,
+		},
+	};
 }

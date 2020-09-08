@@ -1,48 +1,32 @@
-/* globals process */
-
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import Markdown from 'markdown-to-jsx';
-
-import fs from 'fs';
-import path from 'path';
 
 import Layout from 'components/Layout.js';
 import Breadcrumbs from 'components/Breadcrumbs.js';
 
 import { matchesConditions } from 'utils.js';
+import { getConfig } from 'server-utils.js';
 
-import config from '@/config.json';
-
-export default function ResultPage({ results }) {
+export default function ResultPage({ config }) {
 	const router = useRouter();
-	const result = getResult(results, router);
+	const result = getResult(config.results, router);
 
 	return (
-		<Layout id="result">
+		<Layout id="result" config={config}>
 			<>
 				<Result result={result} />
-				<Breadcrumbs />
+				<Breadcrumbs config={config} />
 			</>
 		</Layout>
 	);
 }
 
 export async function getStaticProps() {
-	const results = await Promise.all(
-		config.results.map(async result => {
-			if (result.src) {
-				const filePath = path.join(process.cwd(), result.src);
-				result.text = fs.readFileSync(filePath, 'utf8');
-			}
-
-			return result;
-		})
-	);
+	const config = await getConfig();
 
 	return {
 		props: {
-			results,
+			config
 		},
 	};
 }

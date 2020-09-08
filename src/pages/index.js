@@ -3,17 +3,27 @@ import Markdown from 'markdown-to-jsx';
 
 import Layout from 'components/Layout.js';
 
-import { intro } from '@/config.json';
+import { getConfig } from 'server-utils.js';
 
-export default function Home() {
+export default function Home({ config }) {
 	return (
-		<Layout id="index">
+		<Layout id="index" config={config}>
 			<div>
-				<Markdown>{intro}</Markdown>
+				<Markdown>{config.intro}</Markdown>
 			</div>
 			<Link href="/question">
 				<a className="button">Begin</a>
 			</Link>
 		</Layout>
 	);
+}
+
+export async function getStaticProps() {
+	const config = await getConfig();
+
+	return {
+		props: {
+			config,
+		},
+	};
 }

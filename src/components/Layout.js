@@ -1,9 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import { title } from '@/config.json';
-
-export default function Layout({ id, children }) {
+export default function Layout({ config: { title }, id, children }) {
 	const router = useRouter();
 
 	return (
