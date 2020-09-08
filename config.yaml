@@ -5,108 +5,165 @@ intro: |
 
     Please press the button below to begin.
 questions:
-    - text: Which phase is it?
-      prop: phase
+    - text: What resources are you looking for?
+      prop: resourceType
       options:
-          - value: pre
-            text: Clinic & Pre-Testing
-          - value: post
-            text: Testing & Post-Testing
+          - value: screening
+            text: Screening Guidelines
           - value: discontinutationGuidelines
             text: Isolation Discontinuation Guidelines
-    - text: Who are you?
-      prop: personnelType
-      options:
-          - value: surgeonOffice
-            text: Surgeon Office (MD / Staff)
-          - conditions:
-                phase: pre
-            value: clinicTeam
-            text: Clinic Team
-          - conditions:
-                phase: post
-            value: testingSiteRN
-            text: Testing site RN
+
     - conditions:
-          phase: pre
-          personnelType: surgeonOffice
-      preText:
-          Contact patient for normal pre-op discussion. Inform the patient that they
-          need pre-op COVID testing. Discuss need for patient to have MyChart for results.
-      text: Is the patient able to come to testing site 2-3 days before surgery?
-      prop: patientAbleToTest
+        resourceType: screening
+      text: Where are you located?
+      prop: location
       options:
-          - value: 'yes'
-            text: 'Yes'
-          - value: 'no'
-            text: 'No'
+          - value: urgentCare
+            text: ER / Urgent Care
+          - value: cancerCenterClinic
+            text: Cancer Center Clinic
+          - value: inpatient
+            text: Froedtert Inpatient
+
+
     - conditions:
-          phase: pre
-          personnelType: surgeonOffice
-          patientAbleToTest: 'no'
-      text: Work with patient on alternate arrangements
-      prop: alternateArrangements
+        resourceType: screening
+      text: Does the patient have cough or shortness of breath of unclear etiology or of possible infectious disease etiology?
+      prop: possiblyInfected
       options:
-          - value: ok
-            text: Arrangements to test have been made
+          - value: yes
+            text: Yes
+          - value: no
+            text: No
+
     - conditions:
-          phase: pre
-          personnelType: clinicTeam
-      text: When is the test needed?
-      prop: whenNeeded
+        resourceType: screening
+        possiblyInfected: yes
+        location: cancerCenterClinic
+      preText: Place face mask on patient.
+      text: Does the patient need clinical evaluation?
+      prop: needsEvaluation
       options:
-          - value: today
-            text: Today
-          - value: future
-            text: Future
+          - value: yes
+            text: Yes
+          - value: no
+            text: No
+
+
     - conditions:
-          phase: pre
-          personnelType: clinicTeam
-          whenNeeded: future
-      text: Can patient be scheduled while on call?
-      prop: canBeScheduledOnCall
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+      preText: Place face mask on patient.
+      text: Are you performing an aerosol generating procedure?
+      prop: aerosolGeneratingProcedure
       options:
-          - value: 'yes'
-            text: 'Yes'
-            additionalProps:
-                whenNeeded: today
-          - value: 'no'
-            text: 'No'
+          - value: yes
+            text: Yes
+          - value: no
+            text: No
+
     - conditions:
-          phase: pre
-          personnelType: clinicTeam
-          whenNeeded: future
-          canBeScheduledOnCall: 'no'
-      text: Manage patients not yet scheduled to meet testing date per order details
-      prop: managePatients
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        aerosolGeneratingProcedure: yes
+      preText: |
+          **PPE requirements:**
+
+            - N95 mask
+            - Contact
+            - Eye protection
+
+          A negative pressure room is preferable; if not available, use single room with door closed.
+
+
+          Have managing team perform clinical evaluation on patient.
+      text: What is the etiology of the cough or shortness of breath?
+      prop: etiology
       options:
-          - value: ok
-            text: OK
-            additionalProps:
-                whenNeeded: today
+          - value: possiblyInfectious
+            text: Unclear etiology or possible infectious disease etiology
+          - value: nonInfectious
+            text: Clear non-infectious disease etiology
+
     - conditions:
-          phase: post
-          personnelType: testingSiteRN
-      preText: Confirm patient identity and administer test.
-      text: Is it a weekday?
-      prop: weekday
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        aerosolGeneratingProcedure: no
+      preText: |
+          **PPE requirements:**
+
+            - Droplet / ear loop facemask
+            - Contact
+            - Eye protection
+
+          Have managing team perform clinical evaluation on patient.
+      text: What is the etiology of the cough or shortness of breath?
+      prop: etiology
       options:
-          - value: weekday
-            text: Weekday
-          - value: weekend
-            text: Weekend
+          - value: possiblyInfectious
+            text: Unclear etiology or possible infectious disease etiology
+          - value: nonInfectious
+            text: Clear non-infectious disease etiology
+
     - conditions:
-          phase: post
-          personnelType: surgeonOffice
-      text: What is the patient's test result?
-      prop: testResult
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: urgentCare
+        etiology: possiblyInfectious
+      preText: |
+          **PPE requirements:**
+
+            - Droplet / ear loop facemask
+            - Contact
+            - Eye protection
+      text: Are any of the following true?
+      postText: |
+          1. Patient requires admission
+          2. Patient is over 65 years of age
+          3. Patient has comorbidities*
+      helpText: |
+          ## Comorbidities:
+
+          - Hypertension
+          - Diabetes
+          - Cancer
+          - Chemo
+          - Heart disease
+          - Lung disease
+          - Transplant
+      prop: requiresAdmission
       options:
-          - value: positive
-            text: Positive
+          - value: yes
+            text: Yes
+          - value: no
+            text: No
+
+
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: inpatient
+      preText: |
+          Order FluCOVID19 Reflex Test.
+
+          _If not available, order COVID19 test._
+      text: What are the patient's test results?
+      prop: testResults
+      options:
           - value: negative
-            text: Negative
+            text: COVID19 Negative or Influenza Positive
+          - value: positive
+            text: COVID19 Positive
+
+
+
     - conditions:
-          phase: discontinutationGuidelines
+          resourceType: discontinutationGuidelines
       text: Is the patient immunocompromised?
       helpText: |
           ## The definition of immunocompromised is as follows:
@@ -137,9 +194,9 @@ questions:
           - text:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
-            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+            href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
     - conditions:
-          phase: discontinutationGuidelines
+          resourceType: discontinutationGuidelines
           immunocompromised: 'no'
       text: Was the patient in the ICU for COVID-19 illness?
       prop: severeDisease
@@ -152,95 +209,340 @@ questions:
           - text:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
-            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+            href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+
+
+    # - conditions:
+    #     resourceType: screening
+    #     location: inpatient
+    #   text: What phase is it?
+    #   prop: phase
+    #   options:
+    #       - value: pre
+    #         text: Clinic & Pre-Testing
+    #       - value: post
+    #         text: Testing & Post-Testing
+    #
+    # - conditions:
+    #     resourceType: screening
+    #   text: Who are you?
+    #   prop: personnelType
+    #   options:
+    #       - value: surgeonOffice
+    #         text: Surgeon Office (MD / Staff)
+    #       - conditions:
+    #             phase: pre
+    #         value: clinicTeam
+    #         text: Clinic Team
+    #       - conditions:
+    #             phase: post
+    #         value: testingSiteRN
+    #         text: Testing site RN
+    #
+    # - conditions:
+    #       phase: pre
+    #       personnelType: surgeonOffice
+    #   preText:
+    #       Contact patient for normal pre-op discussion. Inform the patient that they
+    #       need pre-op COVID testing. Discuss need for patient to have MyChart for results.
+    #   text: Is the patient able to come to testing site 2-3 days before surgery?
+    #   prop: patientAbleToTest
+    #   options:
+    #       - value: 'yes'
+    #         text: 'Yes'
+    #       - value: 'no'
+    #         text: 'No'
+    # - conditions:
+    #       phase: pre
+    #       personnelType: surgeonOffice
+    #       patientAbleToTest: 'no'
+    #   text: Work with patient on alternate arrangements
+    #   prop: alternateArrangements
+    #   options:
+    #       - value: ok
+    #         text: Arrangements to test have been made
+    # - conditions:
+    #       phase: pre
+    #       personnelType: clinicTeam
+    #   text: When is the test needed?
+    #   prop: whenNeeded
+    #   options:
+    #       - value: today
+    #         text: Today
+    #       - value: future
+    #         text: Future
+    # - conditions:
+    #       phase: pre
+    #       personnelType: clinicTeam
+    #       whenNeeded: future
+    #   text: Can patient be scheduled while on call?
+    #   prop: canBeScheduledOnCall
+    #   options:
+    #       - value: 'yes'
+    #         text: 'Yes'
+    #         additionalProps:
+    #             whenNeeded: today
+    #       - value: 'no'
+    #         text: 'No'
+    # - conditions:
+    #       phase: pre
+    #       personnelType: clinicTeam
+    #       whenNeeded: future
+    #       canBeScheduledOnCall: 'no'
+    #   text: Manage patients not yet scheduled to meet testing date per order details
+    #   prop: managePatients
+    #   options:
+    #       - value: ok
+    #         text: OK
+    #         additionalProps:
+    #             whenNeeded: today
+    # - conditions:
+    #       phase: post
+    #       personnelType: testingSiteRN
+    #   preText: Confirm patient identity and administer test.
+    #   text: Is it a weekday?
+    #   prop: weekday
+    #   options:
+    #       - value: weekday
+    #         text: Weekday
+    #       - value: weekend
+    #         text: Weekend
+    # - conditions:
+    #       phase: post
+    #       personnelType: surgeonOffice
+    #   text: What is the patient's test result?
+    #   prop: testResult
+    #   options:
+    #       - value: positive
+    #         text: Positive
+    #       - value: negative
+    #         text: Negative
 results:
+
+
     - conditions:
-          phase: pre
-          personnelType: surgeonOffice
-          patientAbleToTest: 'yes'
+        resourceType: screening
+        possiblyInfected: no
+        location: urgentCare
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 ER, Urgent Care v2.pdf'
+    - conditions:
+        resourceType: screening
+        possiblyInfected: no
+        location: cancerCenterClinic
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Patient Physically in Clinic v4.pdf'
+    - conditions:
+        resourceType: screening
+        possiblyInfected: no
+        location: inpatient
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Inpatient Testing v9.pdf'
+
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        location: cancerCenterClinic
+        needsEvaluation: no
+      text: Staff should arrange a cold handoff for Virtual Triage Center or provide information sheet
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Patient Physically in Clinic v4.pdf'
+
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        location: cancerCenterClinic
+        needsEvaluation: [yes, undefined]
+        etiology: nonInfectious
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Patient Physically in Clinic v4.pdf'
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: urgentCare
+        etiology: nonInfectious
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 ER, Urgent Care v2.pdf'
+
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: inpatient
+        testResults: negative
+      text: Normal workflow
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Inpatient Testing v9.pdf'
+    - conditions:
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: inpatient
+        aerosolGeneratingProcedure: no
+        testResults: positive
       text: |
-          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+          **PPE requirements:**
 
-          Include whether the patient is symtomatic or asymptomatic, as well as the following:
-
-          1. **Priority**: Routine/State
-          2. **Status** = Future
-          3. **Expected Date** = today or future date
-          4. **Time**: enter in comments
-          5. **Location**: Select appropriate site
-          6. **Reason for test**
-          7. Any other pertinent information
-
-          Advise patient to self-quarantine at home after test and call clinic with any concerns.
+            - Droplet / ear loop facemask
+            - Contact
+            - Eye protection
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Inpatient Testing v9.pdf'
     - conditions:
-          phase: pre
-          personnelType: surgeonOffice
-          alternateArrangements: ok
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: inpatient
+        aerosolGeneratingProcedure: yes
+        testResults: positive
       text: |
-          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+          **PPE requirements:**
 
-          Include whether the patient is symtomatic or asymptomatic, as well as the following:
+            - N95 mask
+            - Contact
+            - Eye protection
 
-          1. **Priority**: Routine/State
-          2. **Status** = Future
-          3. **Expected Date** = today or future date
-          4. **Time**: enter in comments
-          5. **Location**: Select appropriate site
-          6. **Reason for test**
-          7. Any other pertinent information
+          A negative pressure room is preferable; if not available, use single room with door closed.
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Inpatient Testing v9.pdf'
 
-          Advise patient to self-quarantine at home after test and call clinic with any concerns.
     - conditions:
-          phase: pre
-          personnelType: clinicTeam
-          whenNeeded: today
-      text: |
-        ## Schedule patient using
-
-        1. Appropriate lab department
-        2. Appropriate visit type
-        3. Appropriate resource
-        4. Appropriate date and time
-        5. Links lab order to appointment
-
-        ## Complete registration requirements not already completed in MyChart
-
-        **Every patient** needs the following verified:
-
-        1. Name
-        2. Date of birth
-        3. Insurance coverage
-        4. Phone number
-
-        **If patient is not already verified**, then also:
-
-        5. Patient contacts
-        6. Marital status
-        7. Employment information
-
-        ## Review sidebar checklist for any other items the need updating
-
-        -   Obtain virtual verbal consent for documents
-        -   If Accident Related field is not complete, be sure to complete
-        -   If the patient is on Medicare, and MSPQ is not complete, complete MSPQ found in your toolbar
-
-        ## Direct patient
-
-        1. To go to appropriate specimen collection site
-        2. On appropriate date and time
-        3. To call site-specific number upon arrival
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: urgentCare
+        etiology: possiblyInfectious
+        requiresAdmission: yes
+      text: Order COVID19 Test
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 ER, Urgent Care v2.pdf'
     - conditions:
-          phase: post
-          personnelType: testingSiteRN
-          weekday: weekday
-      text: Instruct patient to wait for results from Clinic Team
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: urgentCare
+        etiology: possiblyInfectious
+        requiresAdmission: no
+      text: Follow up with Primary Care Provider and provide patient with information sheet
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 ER, Urgent Care v2.pdf'
+
     - conditions:
-          phase: post
-          personnelType: testingSiteRN
-          weekday: weekend
-      text: Follow up with patient on test results
+        resourceType: screening
+        possiblyInfected: yes
+        needsEvaluation: [yes, undefined]
+        location: cancerCenterClinic
+        etiology: possiblyInfectious
+      preText: Deliver appropriate clinical care
+      text: Arrange a cold handoff for Virtual Triage Center and provide patient with information sheet
+      resources:
+          - text: Flowsheet
+            href: '/resources/COVID19 Patient Physically in Clinic v4.pdf'
+
+    # - conditions:
+    #       phase: pre
+    #       personnelType: surgeonOffice
+    #       patientAbleToTest: 'yes'
+    #   text: |
+    #       Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+    #
+    #       Include whether the patient is symtomatic or asymptomatic, as well as the following:
+    #
+    #       1. **Priority**: Routine/State
+    #       2. **Status** = Future
+    #       3. **Expected Date** = today or future date
+    #       4. **Time**: enter in comments
+    #       5. **Location**: Select appropriate site
+    #       6. **Reason for test**
+    #       7. Any other pertinent information
+    #
+    #       Advise patient to self-quarantine at home after test and call clinic with any concerns.
+    # - conditions:
+    #       phase: pre
+    #       personnelType: surgeonOffice
+    #       alternateArrangements: ok
+    #   text: |
+    #       Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+    #
+    #       Include whether the patient is symtomatic or asymptomatic, as well as the following:
+    #
+    #       1. **Priority**: Routine/State
+    #       2. **Status** = Future
+    #       3. **Expected Date** = today or future date
+    #       4. **Time**: enter in comments
+    #       5. **Location**: Select appropriate site
+    #       6. **Reason for test**
+    #       7. Any other pertinent information
+    #
+    #       Advise patient to self-quarantine at home after test and call clinic with any concerns.
+    # - conditions:
+    #       phase: pre
+    #       personnelType: clinicTeam
+    #       whenNeeded: today
+    #   text: |
+    #     ## Schedule patient using
+    #
+    #     1. Appropriate lab department
+    #     2. Appropriate visit type
+    #     3. Appropriate resource
+    #     4. Appropriate date and time
+    #     5. Links lab order to appointment
+    #
+    #     ## Complete registration requirements not already completed in MyChart
+    #
+    #     **Every patient** needs the following verified:
+    #
+    #     1. Name
+    #     2. Date of birth
+    #     3. Insurance coverage
+    #     4. Phone number
+    #
+    #     **If patient is not already verified**, then also:
+    #
+    #     5. Patient contacts
+    #     6. Marital status
+    #     7. Employment information
+    #
+    #     ## Review sidebar checklist for any other items the need updating
+    #
+    #     -   Obtain virtual verbal consent for documents
+    #     -   If Accident Related field is not complete, be sure to complete
+    #     -   If the patient is on Medicare, and MSPQ is not complete, complete MSPQ found in your toolbar
+    #
+    #     ## Direct patient
+    #
+    #     1. To go to appropriate specimen collection site
+    #     2. On appropriate date and time
+    #     3. To call site-specific number upon arrival
+    # - conditions:
+    #       phase: post
+    #       personnelType: testingSiteRN
+    #       weekday: weekday
+    #   text: Instruct patient to wait for results from Clinic Team
+    # - conditions:
+    #       phase: post
+    #       personnelType: testingSiteRN
+    #       weekday: weekend
+    #   text: Follow up with patient on test results
     - conditions:
-          phase: discontinutationGuidelines
+          resourceType: discontinutationGuidelines
           immunocompromised: 'yes'
       text: |
           ## Patient must meet **ALL** of the following criteria to have isolation precautions discontinued when accessing services at a Froedtert Health facility:
@@ -263,9 +565,9 @@ results:
           - text:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
-            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+            href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
     - conditions:
-          phase: discontinutationGuidelines
+          resourceType: discontinutationGuidelines
           immunocompromised: 'no'
           severeDisease: 'yes'
       text: |
@@ -289,9 +591,9 @@ results:
           - text:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
-            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+            href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
     - conditions:
-          phase: discontinutationGuidelines
+          resourceType: discontinutationGuidelines
           immunocompromised: 'no'
           severeDisease: 'no'
       text: |
@@ -315,5 +617,5 @@ results:
           - text:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
-            href: '/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+            href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
     - text: Sorry, this shouldn't have happened.

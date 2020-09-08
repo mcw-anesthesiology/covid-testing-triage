@@ -4,7 +4,7 @@ import { Dialog } from '@reach/dialog';
 
 import Options from 'components/Options.js';
 
-export default function Question({ preText, text, helpText, prop, options }) {
+export default function Question({ preText, text, postText, helpText, prop, options }) {
 	const [showInfo, setShowInfo] = useState(false);
 	const toggleInfo = () => {
 		setShowInfo(!showInfo);
@@ -23,6 +23,11 @@ export default function Question({ preText, text, helpText, prop, options }) {
 			<div className="question-text">
 				<Markdown>{text}</Markdown>
 			</div>
+			{postText && (
+				<div className="question-pre-text">
+					<Markdown>{postText}</Markdown>
+				</div>
+			)}
 			{helpText && (
 				<div className="question-help-container">
 					<button

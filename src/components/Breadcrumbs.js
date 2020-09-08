@@ -14,7 +14,8 @@ export default function Breadcrumbs({ config }) {
 			...q,
 			answerText: q.options.find(o => o.value === router.query[q.prop])
 				?.text,
-		}));
+		}))
+		.reduce((arr, x) => arr.find(o => o.prop === x.prop) ? arr : arr.concat(x), []);
 
 	return (
 		<div className="breadcrumbs">
