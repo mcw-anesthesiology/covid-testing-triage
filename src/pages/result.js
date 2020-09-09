@@ -26,7 +26,7 @@ export async function getStaticProps() {
 
 	return {
 		props: {
-			config
+			config,
 		},
 	};
 }
@@ -39,13 +39,16 @@ export function Result({ result }) {
 	let resources = null;
 	if (result.resources && result.resources.length > 0) {
 		resources = (
-			<ul className="resources">
-				{result.resources.map(resource => (
-					<li key={resource.href}>
-						<a href={resource.href}>{resource.text}</a>
-					</li>
-				))}
-			</ul>
+			<div>
+				<h3>Additional resources</h3>
+				<ul className="resources">
+					{result.resources.map(resource => (
+						<li key={resource.href}>
+							<a href={resource.href}>{resource.text}</a>
+						</li>
+					))}
+				</ul>
+			</div>
 		);
 	}
 

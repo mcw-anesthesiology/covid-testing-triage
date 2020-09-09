@@ -10,6 +10,8 @@ questions:
       options:
           - value: screening
             text: Screening Guidelines
+          - value: preop
+            text: Froedtert Health Pre-Op Testing Guidelines
           - value: discontinutationGuidelines
             text: Isolation Discontinuation Guidelines
 
@@ -212,114 +214,199 @@ questions:
             href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
 
 
-    # - conditions:
-    #     resourceType: screening
-    #     location: inpatient
-    #   text: What phase is it?
-    #   prop: phase
-    #   options:
-    #       - value: pre
-    #         text: Clinic & Pre-Testing
-    #       - value: post
-    #         text: Testing & Post-Testing
-    #
-    # - conditions:
-    #     resourceType: screening
-    #   text: Who are you?
-    #   prop: personnelType
-    #   options:
-    #       - value: surgeonOffice
-    #         text: Surgeon Office (MD / Staff)
-    #       - conditions:
-    #             phase: pre
-    #         value: clinicTeam
-    #         text: Clinic Team
-    #       - conditions:
-    #             phase: post
-    #         value: testingSiteRN
-    #         text: Testing site RN
-    #
-    # - conditions:
-    #       phase: pre
-    #       personnelType: surgeonOffice
-    #   preText:
-    #       Contact patient for normal pre-op discussion. Inform the patient that they
-    #       need pre-op COVID testing. Discuss need for patient to have MyChart for results.
-    #   text: Is the patient able to come to testing site 2-3 days before surgery?
-    #   prop: patientAbleToTest
-    #   options:
-    #       - value: 'yes'
-    #         text: 'Yes'
-    #       - value: 'no'
-    #         text: 'No'
-    # - conditions:
-    #       phase: pre
-    #       personnelType: surgeonOffice
-    #       patientAbleToTest: 'no'
-    #   text: Work with patient on alternate arrangements
-    #   prop: alternateArrangements
-    #   options:
-    #       - value: ok
-    #         text: Arrangements to test have been made
-    # - conditions:
-    #       phase: pre
-    #       personnelType: clinicTeam
-    #   text: When is the test needed?
-    #   prop: whenNeeded
-    #   options:
-    #       - value: today
-    #         text: Today
-    #       - value: future
-    #         text: Future
-    # - conditions:
-    #       phase: pre
-    #       personnelType: clinicTeam
-    #       whenNeeded: future
-    #   text: Can patient be scheduled while on call?
-    #   prop: canBeScheduledOnCall
-    #   options:
-    #       - value: 'yes'
-    #         text: 'Yes'
-    #         additionalProps:
-    #             whenNeeded: today
-    #       - value: 'no'
-    #         text: 'No'
-    # - conditions:
-    #       phase: pre
-    #       personnelType: clinicTeam
-    #       whenNeeded: future
-    #       canBeScheduledOnCall: 'no'
-    #   text: Manage patients not yet scheduled to meet testing date per order details
-    #   prop: managePatients
-    #   options:
-    #       - value: ok
-    #         text: OK
-    #         additionalProps:
-    #             whenNeeded: today
-    # - conditions:
-    #       phase: post
-    #       personnelType: testingSiteRN
-    #   preText: Confirm patient identity and administer test.
-    #   text: Is it a weekday?
-    #   prop: weekday
-    #   options:
-    #       - value: weekday
-    #         text: Weekday
-    #       - value: weekend
-    #         text: Weekend
-    # - conditions:
-    #       phase: post
-    #       personnelType: surgeonOffice
-    #   text: What is the patient's test result?
-    #   prop: testResult
-    #   options:
-    #       - value: positive
-    #         text: Positive
-    #       - value: negative
-    #         text: Negative
+    - conditions:
+          resourceType: preop
+      text: What phase is it?
+      prop: phase
+      options:
+          - value: pre
+            text: Clinic & Pre-Testing
+          - value: post
+            text: Testing & Post-Testing
+
+    - conditions:
+          resourceType: preop
+      text: Who are you?
+      prop: personnelType
+      options:
+          - value: surgeonOffice
+            text: Surgeon Office (MD / Staff)
+          - conditions:
+                phase: pre
+            value: clinicTeam
+            text: Clinic Team
+          - conditions:
+                phase: post
+            value: testingSiteRN
+            text: Testing site RN
+
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: surgeonOffice
+      preText:
+          Contact patient for normal pre-op discussion. Inform the patient that they
+          need pre-op COVID testing. Discuss need for patient to have MyChart for results.
+      text: Is the patient able to come to testing site 2-3 days before surgery?
+      prop: patientAbleToTest
+      options:
+          - value: 'yes'
+            text: 'Yes'
+          - value: 'no'
+            text: 'No'
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: surgeonOffice
+          patientAbleToTest: 'no'
+      text: Work with patient on alternate arrangements
+      prop: alternateArrangements
+      options:
+          - value: ok
+            text: Arrangements to test have been made
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: clinicTeam
+      text: When is the test needed?
+      prop: whenNeeded
+      options:
+          - value: today
+            text: Today
+          - value: future
+            text: Future
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: future
+      text: Can patient be scheduled while on call?
+      prop: canBeScheduledOnCall
+      options:
+          - value: 'yes'
+            text: 'Yes'
+            additionalProps:
+                whenNeeded: today
+          - value: 'no'
+            text: 'No'
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: future
+          canBeScheduledOnCall: 'no'
+      text: Manage patients not yet scheduled to meet testing date per order details
+      prop: managePatients
+      options:
+          - value: ok
+            text: OK
+            additionalProps:
+                whenNeeded: today
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: testingSiteRN
+      preText: Confirm patient identity and administer test.
+      text: Is it a weekday?
+      prop: weekday
+      options:
+          - value: weekday
+            text: Weekday
+          - value: weekend
+            text: Weekend
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+      text: What is the patient's test result?
+      prop: testResult
+      options:
+          - value: positive
+            text: Positive
+          - value: negative
+            text: Negative
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+      text: What kind of surgery is it?
+      prop: surgeryType
+      options:
+          - value: elective
+            text: Elective
+          - value: emergent
+            text: Emergent / urgent
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+      text: Is the patient symptomatic?
+      prop: symptomatic
+      options:
+          - value: yes
+            text: Yes, Symptomatic
+          - value: no
+            text: No, Asymptomatic
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: yes
+      helpText: |
+          ## Definition of recovery:
+
+          Improvement in respiratory symptoms **and** >10 days from symptom onset **and** return to baseline functional capacity.
+
+          No fever for 72 hours without anti-pyretics.
+      text: Has the patient recovered?*
+      prop: recovered
+      options:
+          - value: recovered
+            text: Recovered
+          - value: notRecovered
+            text: Not recovered
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: no
+      preText: Determine test date of first positive test. Wait until 10 days post-test to ask about symptoms.
+      helpText: |
+          ## COVID-19 Symptoms
+
+          - Fever or chills
+          - Cough
+          - Shortness of breath
+          - Congestion or runny nose
+          - Sore throat
+          - New loss of taste or smell
+          - Nausea or vomiting
+          - Diarrhea
+          - Headache
+          - Fatigue
+          - Myalgias
+      text: Does the patient exhibit any symptoms?*
+      prop: exhibitsSymptoms
+      options:
+          - value: yes
+            text: Yes
+          - value: no
+            text: No
+
+
+
+
 results:
-
-
     - conditions:
         resourceType: screening
         possiblyInfected: no
@@ -456,91 +543,202 @@ results:
           - text: Flowsheet
             href: '/resources/COVID19 Patient Physically in Clinic v4.pdf'
 
-    # - conditions:
-    #       phase: pre
-    #       personnelType: surgeonOffice
-    #       patientAbleToTest: 'yes'
-    #   text: |
-    #       Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
-    #
-    #       Include whether the patient is symtomatic or asymptomatic, as well as the following:
-    #
-    #       1. **Priority**: Routine/State
-    #       2. **Status** = Future
-    #       3. **Expected Date** = today or future date
-    #       4. **Time**: enter in comments
-    #       5. **Location**: Select appropriate site
-    #       6. **Reason for test**
-    #       7. Any other pertinent information
-    #
-    #       Advise patient to self-quarantine at home after test and call clinic with any concerns.
-    # - conditions:
-    #       phase: pre
-    #       personnelType: surgeonOffice
-    #       alternateArrangements: ok
-    #   text: |
-    #       Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
-    #
-    #       Include whether the patient is symtomatic or asymptomatic, as well as the following:
-    #
-    #       1. **Priority**: Routine/State
-    #       2. **Status** = Future
-    #       3. **Expected Date** = today or future date
-    #       4. **Time**: enter in comments
-    #       5. **Location**: Select appropriate site
-    #       6. **Reason for test**
-    #       7. Any other pertinent information
-    #
-    #       Advise patient to self-quarantine at home after test and call clinic with any concerns.
-    # - conditions:
-    #       phase: pre
-    #       personnelType: clinicTeam
-    #       whenNeeded: today
-    #   text: |
-    #     ## Schedule patient using
-    #
-    #     1. Appropriate lab department
-    #     2. Appropriate visit type
-    #     3. Appropriate resource
-    #     4. Appropriate date and time
-    #     5. Links lab order to appointment
-    #
-    #     ## Complete registration requirements not already completed in MyChart
-    #
-    #     **Every patient** needs the following verified:
-    #
-    #     1. Name
-    #     2. Date of birth
-    #     3. Insurance coverage
-    #     4. Phone number
-    #
-    #     **If patient is not already verified**, then also:
-    #
-    #     5. Patient contacts
-    #     6. Marital status
-    #     7. Employment information
-    #
-    #     ## Review sidebar checklist for any other items the need updating
-    #
-    #     -   Obtain virtual verbal consent for documents
-    #     -   If Accident Related field is not complete, be sure to complete
-    #     -   If the patient is on Medicare, and MSPQ is not complete, complete MSPQ found in your toolbar
-    #
-    #     ## Direct patient
-    #
-    #     1. To go to appropriate specimen collection site
-    #     2. On appropriate date and time
-    #     3. To call site-specific number upon arrival
-    # - conditions:
-    #       phase: post
-    #       personnelType: testingSiteRN
-    #       weekday: weekday
-    #   text: Instruct patient to wait for results from Clinic Team
-    # - conditions:
-    #       phase: post
-    #       personnelType: testingSiteRN
-    #       weekday: weekend
-    #   text: Follow up with patient on test results
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: surgeonOffice
+          patientAbleToTest: 'yes'
+      text: |
+          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+
+          Include whether the patient is symtomatic or asymptomatic, as well as the following:
+
+          1. **Priority**: Routine/State
+          2. **Status** = Future
+          3. **Expected Date** = today or future date
+          4. **Time**: enter in comments
+          5. **Location**: Select appropriate site
+          6. **Reason for test**
+          7. Any other pertinent information
+
+          Advise patient to self-quarantine at home after test and call clinic with any concerns.
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: surgeonOffice
+          alternateArrangements: ok
+      text: |
+          Place order for appropriate COVID test based on clinical need using `.COVID19PREOP` Smart Phrase.
+
+          Include whether the patient is symtomatic or asymptomatic, as well as the following:
+
+          1. **Priority**: Routine/State
+          2. **Status** = Future
+          3. **Expected Date** = today or future date
+          4. **Time**: enter in comments
+          5. **Location**: Select appropriate site
+          6. **Reason for test**
+          7. Any other pertinent information
+
+          Advise patient to self-quarantine at home after test and call clinic with any concerns.
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+    - conditions:
+          resourceType: preop
+          phase: pre
+          personnelType: clinicTeam
+          whenNeeded: today
+      text: |
+        ## Schedule patient using
+
+        1. Appropriate lab department
+        2. Appropriate visit type
+        3. Appropriate resource
+        4. Appropriate date and time
+        5. Links lab order to appointment
+
+        ## Complete registration requirements not already completed in MyChart
+
+        **Every patient** needs the following verified:
+
+        1. Name
+        2. Date of birth
+        3. Insurance coverage
+        4. Phone number
+
+        **If patient is not already verified**, then also:
+
+        5. Patient contacts
+        6. Marital status
+        7. Employment information
+
+        ## Review sidebar checklist for any other items the need updating
+
+        -   Obtain virtual verbal consent for documents
+        -   If Accident Related field is not complete, be sure to complete
+        -   If the patient is on Medicare, and MSPQ is not complete, complete MSPQ found in your toolbar
+
+        ## Direct patient
+
+        1. To go to appropriate specimen collection site
+        2. On appropriate date and time
+        3. To call site-specific number upon arrival
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+    - conditions:
+          phase: post
+          personnelType: testingSiteRN
+          weekday: weekday
+      text: Instruct patient to wait for results from Clinic Team
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: testingSiteRN
+          weekday: weekend
+      text: Follow up with patient on test results
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: negative
+      text: Proceed with surgery
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: emergent
+      text: Continue with surgery with full PPE, including an N95 mask and a negative pressure room if possible.
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: yes
+          recovered: notRecovered
+      text: Delay surgery
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+          - text: Approach to elective surgery
+            href: '/resources/COVID Flow Chart 9 1 2020 NW edits  -  Read-Only.pdf'
+
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: yes
+          recovered: recovered
+      text: |
+          Plan for surgery 1 month post-recovery.
+
+          Refer to Pre-Op clinic for assessment and continue with surgery.
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+          - text: Approach to elective surgery
+            href: '/resources/COVID Flow Chart 9 1 2020 NW edits  -  Read-Only.pdf'
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: no
+          exhibitsSymptoms: no
+      text: |
+          Schedule surgery.
+
+          Refer to Pre-Op clinic for assessment and continue with surgery.
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+          - text: Approach to elective surgery
+            href: '/resources/COVID Flow Chart 9 1 2020 NW edits  -  Read-Only.pdf'
+
+    - conditions:
+          resourceType: preop
+          phase: post
+          personnelType: surgeonOffice
+          testResult: positive
+          surgeryType: elective
+          symptomatic: no
+          exhibitsSymptoms: yes
+      text: Delay surgery
+      resources:
+          - text: Froedtert Health Pre-Op COVID Testing Decentralized Model
+            href: '/resources/v1r10_Froedtert Health Pre-Op Covid Testing Decentralized Model v1r10.pdf'
+          - text: Approach to elective surgery
+            href: '/resources/COVID Flow Chart 9 1 2020 NW edits  -  Read-Only.pdf'
+
+
+
+
+
+
+
     - conditions:
           resourceType: discontinutationGuidelines
           immunocompromised: 'yes'
@@ -618,4 +816,8 @@ results:
                 Clinical Guidance for Discontinuation of Isolation for SARS CoV-2 Positive
                 Patients
             href: '/resources/IPAC DC Isolation Criteria 8.4.2020 V12.pdf'
+
+
+
     - text: Sorry, this shouldn't have happened.
+

@@ -12,10 +12,6 @@ main#result h2:not(:first-child) {
 	margin-top: 2em;
 }
 
-main#result .resources {
-	padding-left: 0;
-}
-
 @media (min-width: 800px) {
 	main#result .result {
 		font-size: 1.1em;
